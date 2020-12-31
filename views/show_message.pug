@@ -1,0 +1,25 @@
+html
+   head
+      title Person
+   body
+      if(type == "error")
+         h3(style = "color:red") #{message}
+      
+      if(type == "OK")
+         h3 New person: 
+         name name: #{newPerson.name} , 
+         br
+         surname surname: #{newPerson.surname} ,
+         br 
+         address address: #{newPerson.address} ,
+         
+         city city: #{newPerson.city} ,
+         br 
+         zipCode zipcode: #{newPerson.zipcode} ,
+         br 
+         phone phone: #{newPerson.phone} ,
+         br
+         email email: #{newPerson.email} 
+         br
+         br
+         added added to database 

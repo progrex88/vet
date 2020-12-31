@@ -1,0 +1,53 @@
+html
+head
+title Pets
+
+body
+    form(action ="/pets", method = 'POST')
+        div
+            label(for="name") Name:
+            input(name="name")
+        br
+
+
+        div
+            label(for="species") Species:
+            input(name="species")
+        br
+
+
+        div
+            label(for="breed") Breed:
+            input(name="breed")
+        br
+
+        div
+            label(for="weight") Weight:
+            input(name="weight")
+        br
+
+        div
+            label(for="date") Date:
+            input(name="date")
+        br
+
+        div
+            label(for="hcolor") Hair color:
+            input(name="hcolor")
+        br
+
+        div
+            label(for="htype") Hair type:
+            input(name="htype")
+        br
+
+        div
+            label(for="comment") Comment:
+            textarea( rows="4" cols="50" name="comment")
+        br
+
+       
+
+
+        
+        button(type="submit") Save new client

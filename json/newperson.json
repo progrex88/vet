@@ -1,0 +1,10 @@
+{
+    "name":    "req.body.name",
+    "surname": "req.body.surname",
+    "address": "req.body.address",
+    "city":    "req.body.city",
+    "zipcode": "req.body.zipCode",
+    "phone":   "req.body.phone",
+    "email":   "req.body.email"
+ }
+ 
