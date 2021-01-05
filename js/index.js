@@ -7,14 +7,18 @@ const upload = multer();
 const {v4: uuid4} = require('uuid');
 const app = express();
 const port = 3000;
+const petslist = require('./pets');
 
 
-const { CommandCursor } = require('mongodb');
-const MongoClient = require('mongodb').MongoClient;
+// const { CommandCursor } = require('mongodb');
+//const MongoClient = require('mongodb').MongoClient;
 
-const mysql = require('mysql');
-const db = require('./sqldb');
+// const mysql = require('mysql');
+//const db = require('./sqldb');
 
+
+
+const sqlitedb = require('./sqlite');
 // const con = mysql.createConnection({
 //   host: 'localhost',
 //   user: 'root',
@@ -64,6 +68,7 @@ app.use(express.static('css'));
 //app.use(express.static('html'));
 app.use(express.static('js'));
 app.use(express.static('public'));
+app.use('/pets',petslist);
 
 
 
@@ -82,19 +87,15 @@ app.get('/pets', function(req,res){
   res.render('pets');
 });
 
-
+app.get('/searchpets', function(req,res){
+  res.render('searchpets');
+})
 
 
 app.get('/dashboard', function(req,res){
   res.render('dashboard');
 });
 
-app.get('/dynamic_view', function(req,res){
-  res.render('dynamic', {
-    name: 'tutpoints',
-    url: "https://www.tutorialspoint.com/"
-  });
-});
 
 app.get('/', (req, res) => {
   res.send('Hello as!')
@@ -107,26 +108,23 @@ app.get('/form', function(req, res){
 app.get('/vetmanager', function(req,res){
   res.render('vetmanager');
 })
-//----------mysql test------------------//
-// app.get('/dbsave', function(req,res){
-//   const post = {name:"rad", surname:"pac", address:"jajajaja",phone:'kjbklk',email:'sasd@as.as'};
-//   db.query('INSERT INTO person SET ?', post, function(err, result) {
-//   if (err) throw err});
-//   console.log('saved to mysql');
-//   res.render('dbsave')
-// });
-//--------------------------------//
+
 
 
 app.get('/allpets', async function(req, res){
 
     
   //----------------SQL-----------------//
-  const sql = db.query("SELECT * FROM pets", function(err, result,fields) {
-    if (err) throw err;
-    //console.log(result)
-    res.json(result);
-  });
+  // const sql = db.query("SELECT * FROM pets", function(err, result,fields) {
+  //   if (err) throw err;
+  //   //console.log(result)
+  //   res.json(result);
+  // });
+
+  //---------------SQLITE---------------//
+
+
+
 
 });
 
@@ -134,12 +132,15 @@ app.get('/allpets', async function(req, res){
 app.get('/allclients', async function(req, res){
 
     
-      //----------------SQL-----------------//
-      const sql = db.query("SELECT * FROM person", function(err, result,fields) {
-        if (err) throw err;
-        //console.log(result)
-        res.json(result);
-      });
+      //----------------MYSQL-----------------//
+      // const sql = db.query("SELECT * FROM person", function(err, result,fields) {
+      //   if (err) throw err;
+      //   //console.log(result)
+      //   res.json(result);
+      // });
+
+      //-----------------SQLITE-------------//
+
 
 
 
@@ -162,25 +163,25 @@ app.get('/allclients', async function(req, res){
 
   });
 
-  var birds = require('./birds')
+  
 
 // ...
-
-app.use('/birds', birds)
+// var birds = require('./birds')
+// app.use('/birds', birds)
  
 
-  app.get('/search', async function(req,res){
+//   app.get('/search', async function(req,res){
 
-    let perids ;
+//     let perids ;
 
-    const sql = db.query("SELECT * FROM person", function(err, result,fields) {
-      if (err) throw err;
-      res.render('searchclient', {userData:result});
-    });
+//     const sql = db.query("SELECT * FROM person", function(err, result,fields) {
+//       if (err) throw err;
+//       res.render('searchclient', {userData:result});
+//     });
 
          
          
-  })
+//   })
   
   
 
@@ -224,6 +225,19 @@ app.post('/form', function(req, res){
 app.post('/pets', async function(req,res){
   //res.render('pets')
   const petinfo = req.body; //Get the parsed information
+
+ const newpet = {
+        petid : uuid4(),
+        petname:    petinfo.name,
+        petspecies: petinfo.species,
+        petbreed: petinfo.breed,
+        petweight:    petinfo.weight,
+        petdate: petinfo.date,
+        pethcolor:   petinfo.hcolor,
+        pethtype:   petinfo.htype,
+        petcomment: petinfo.comment
+ };
+
   
   if(!petinfo.name || !petinfo.species || !petinfo.breed 
     || !petinfo.weight || !petinfo.date 
@@ -233,19 +247,7 @@ app.post('/pets', async function(req,res){
         message: "Sorry, you provided worng info", type: "error"});
       } 
   else {
-
-     const newpet = {
-        id : uuid4(),
-        name:    petinfo.name,
-        species: petinfo.species,
-        breed: petinfo.breed,
-        weight:    petinfo.weight,
-        date: petinfo.date,
-        hcolor:   petinfo.hcolor,
-        htype:   petinfo.htype,
-        comment: petinfo.comment
-     };
-
+    newpet;
 
         {
         
@@ -254,9 +256,30 @@ app.post('/pets', async function(req,res){
        }
 
         //-----------------MYSQL----------------//
-        db.query('INSERT INTO pets SET ?', newpet, function(err, result) {
-        if (err) throw err});
-        console.log('saved to mysql');
+        // db.query('INSERT INTO pets SET ?', newpet, function(err, result) {
+        // if (err) throw err});
+        // console.log('saved to mysql');
+
+
+        //----------------SQLITE---------------//
+       const sql_insert = `INSERT INTO pets(petid,petname,petspecies,petbreed,petweight,petdate,pethcolor,pethtype,petcomment) VALUES ("${newpet.petid}","${newpet.petname}","${newpet.petspecies}",
+        "${newpet.petbreed}","${newpet.petweight}","${newpet.petdate}","${newpet.pethcolor}","${newpet.pethtype}","${newpet.petcomment}")`;
+
+
+       sqlitedb.run(sql_insert,err => {
+         if(err){
+           console.log(sql_insert);
+           return console.error(err.message);
+         }
+         console.log('created pet')
+       });
+
+        // sqlitedb.close( (err) => {
+        //   if (err) {
+        //     console.error(err.message);
+        //   }
+        //   console.log('db conn closed');
+        // });
 
   };
 
@@ -293,20 +316,23 @@ app.post('/client', async function(req, res){
           res.render('show_message',{newPerson, type: "OK"});
        }
 
+       //----------------SQLITE-----------------//
+
+
+
+
+
         //-----------------MYSQL----------------//
-        db.query('INSERT INTO person SET ?', newPerson, function(err, result) {
-        if (err) throw err},
-        console.log(newPerson.perid.length)
-        );
+        // db.query('INSERT INTO person SET ?', newPerson, function(err, result) {
+        // if (err) throw err},
+        // console.log(newPerson.perid.length)
+        // );
 
-        db.query('INSERT INTO pets(perid) value (\''+newPerson.perid+'\')',function(err,result){
-          if(err) throw err},
-          console.log(newPerson.perid), 
-        );
-
-        
-        
-        console.log('saved to mysql');
+        // db.query('INSERT INTO pets(perid) value (\''+newPerson.perid+'\')',function(err,result){
+        //   if(err) throw err},
+        //   console.log(newPerson.perid), 
+        // );        
+        // console.log('saved to mysql');
 
 
 
@@ -331,6 +357,16 @@ app.post('/client', async function(req, res){
   };
 
 });
+
+
+//-----------Functions---------------------//
+
+
+
+
+
+
+
 
 
 

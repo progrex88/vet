@@ -1,0 +1,37 @@
+html
+head
+    title Search Pets
+    style
+        table(td, th { 
+        border: 1px solid #ddd; 
+        text-align: left; 
+        } )
+        table({ 
+        border-collapse: collapse; 
+        width: 50%; 
+        })
+        .table-data({ 
+        position: relative; 
+        left:150px; 
+        top:100px; 
+        }) 
+        th({ 
+        padding: 15px
+        })
+
+
+    body
+        form(action="", method="post")
+        input(id="search" type="text" name="search" placeholder="Search pet..." onchange='this.form.submit()' )
+        Button(type=submit) submit
+        //select(name="name" onchange="this.form.submit()")
+
+        table(border='1')
+            tr
+            th(for='name' name='name') Name
+            th(for='comment' name='comment') Comment
+            
+            for pet in petsData
+            tr.odd(role='row')
+                td #{data.petname};
+                td #{data.petcomment}; 
