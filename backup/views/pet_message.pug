@@ -1,0 +1,14 @@
+html
+   head
+      title Pet
+   body
+      if(type == "error")
+         h3(style = "color:red") #{message}
+      
+      if(type == "OK")
+         h3 New pet: 
+         name name: #{newpet.name}
+         br
+         
+         br
+         added added to database 

@@ -1,0 +1,142 @@
+body{
+    background: linear-gradient(to right, #00b09b, #96c93d);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    margin: 0;
+    
+
+}
+
+h1 
+{
+    text-align: center;
+    font-size: xx-large;
+    color:rgb(0, 0, 0) ;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    
+}
+
+.description{
+    text-align: center;
+}
+
+.form
+{
+    color: #000000;
+    text-align: center;
+    font-size: x-large;
+    /* margin-top: 30px;
+    margin-bottom: 30px; */
+    border: 4px solid red;
+}
+
+.greeting
+{
+    color: #000000;
+    text-align: center;
+    font-size: x-large;
+    /* margin-top: 30px;
+    margin-bottom: 30px; */
+    border: 4px solid red;
+}
+
+label{
+    color: red;
+   
+}
+
+input[type=text]
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 40%;
+    height: 50px;
+    padding: 0 30px;
+}
+
+input[type=button], input[type=submit], input[type=reset]
+{
+    
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    cursor: pointer;
+    text-align: center;
+}
+
+
+.topsite{
+    display: flex;
+    flex-wrap: wrap;
+    border: 3px solid red;
+    flex-direction: row;
+    /* align-items: center; */
+
+}
+
+.floatLeft { 
+    float: left; 
+
+
+}
+
+.floatRight { 
+    float: right;
+
+
+}
+
+.floatRight , .floatLeft{
+    width: 50%; 
+    
+    
+}
+
+.array{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; 
+    flex-direction: column;
+}
+
+.vetmanager{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    flex:1;
+}
+
+.buttons{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    flex:1;
+}
+
+.button{
+    width: 300px;
+    border: 2px solid black;
+}
+
+.bt1 {
+    background-color: blueviolet;
+    background-image: url(/img/3.png);
+}
+
+.bt2 {
+    background-color: rgb(80, 226, 43);
+}
+
+.bt3 {
+    background-color: rgb(226, 110, 43);
+}
+
+.bt4 {
+    background-color: rgb(43, 226, 226);
+}
+

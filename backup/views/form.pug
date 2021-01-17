@@ -1,0 +1,16 @@
+html
+head
+title form
+
+body
+    form(action ="/form", method = 'POST')
+        div
+            label(for ='say') Say:
+            input(name = "say" value='Hi')
+        br
+        div
+            label(for='to') To:
+            input(name ='to' value = 'Express form')
+            
+        br
+        button(type = 'submit') Send
