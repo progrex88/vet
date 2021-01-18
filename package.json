@@ -4,21 +4,24 @@
   "description": "page with sites",
   "main": "./js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./js/index.js",
+    "dev" : "nodemon ./js/index.js"
   },
   "author": "RP",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
     "mongodb": "^3.6.3",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
-    "pug": "^3.0.0",
+    "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.7",
+    "pug": "^3.0.0"
   }
 }
